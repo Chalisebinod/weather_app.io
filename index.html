@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="BinodChalise_2329817.css">
+    <script src="https://kit.fontawesome.com/3412c74b1e.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="search-box">
+        <input type="text" id="search-box" placeholder="Enter a city" name="search">
+        <button id="search-button">Search</button>
+    </div>
+    
+    <div class="vl">
+        <h1><span>Weather Update</span></h1>
+        <div class="upper">
+            <div class="left">
+                <div class="loca">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p id="location">Seattle</p>
+                </div>
+                <div class="date">
+                    <p id="date">September 15</p>
+                    <p id="day">Monday</p>
+                </div>
+                <div class="temp">
+                    <div class="degre">
+                        <i class="fa-solid fa-temperature-three-quarters"></i>
+                        <p id="temp">25°</p>
+                    </div>
+                    <p id="feel">Feels like 23°</p>
+                </div>
+            </div>
+            <div class="middle">
+                <img id="icon" src="" alt="cloud"><br>
+                <br>
+                <p id="cloud">Cloudy</p>
+            </div>
+            <div class="right">
+                <table>
+                    <tr>
+                        <td><i class="fa-solid fa-droplet"></i></td>
+                        <td id="humidity">60%</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-wind"></i></td>
+                        <td id="wind">10m/s</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-location-arrow"></i></td>
+                        <td>North-East</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-arrow-up"></i></td>
+                        <td id="pressure">1023.0 mb</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-umbrella"></i></td>
+                        <td id="rain">10mm</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="link">
+        <a id="connect" href="BinodChalise_2329817.php">Last week weather report</a>
+    </div>
+    
+    <script src="binod.js"></script>
+    <script>
+        // Function to fetch weather data and update HTML elements
+        function fetchWeatherData(city) {
+            // Make an AJAX request to fetch weather data
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'BinodChalise_2329817.php?city=' + city, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    updateWeatherElements(data);
+                }
+            };
+            xhr.send();
+        }
+        
+        // Function to update HTML elements with weather data
+        function updateWeatherElements(data) {
+            document.getElementById('location').textContent = data.location;
+            document.getElementById('date').textContent = data.date;
+            document.getElementById('temp').textContent = data.temperature;
+            document.getElementById('feel').textContent = 'Feels like ' + data.feelslike;
+            document.getElementById('cloud').textContent = data.weather;
+            document.getElementById('humidity').textContent = data.humidity;
+            document.getElementById('wind').textContent = data.wind;
+        }
+        
+        // Event listener for search button click
+        document.getElementById('search-button').addEventListener('click', function(event) {
+            event.preventDefault();
+            var searchInput = document.getElementById('search-box').value;
+            fetchWeatherData(searchInput);
+        });
+    </script>
+</body>
+</html>
